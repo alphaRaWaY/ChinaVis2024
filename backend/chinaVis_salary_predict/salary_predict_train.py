@@ -5,7 +5,16 @@ from sklearn.model_selection import train_test_split
 from xgboost import XGBClassifier  # Import XGBoost
 from sklearn.metrics import accuracy_score
 import joblib  # Used for saving and loading models
-
+import os
+from dotenv import load_dotenv
+# ----------------- 新增連線配置區 -----------------
+# 載入 .env 檔案中的所有變數
+load_dotenv()
+DB_USER = os.getenv("DB_USER")
+DB_PASSWORD = os.getenv("DB_PASSWORD")
+DB_HOST = os.getenv("DB_HOST")
+DB_NAME = os.getenv("DB_NAME")
+DB_PORT = os.getenv("DB_PORT")
 # Load data
 job_titles = np.load('../data/job_titles.npy')[::-1]
 cities = np.load('../data/cities.npy')[::-1]
@@ -18,11 +27,11 @@ company_type = np.load('../data/company_type.npy')[::-1]
 # Load data from database
 def load_data_from_database():
     conn = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        port="3306",
-        password="a21340201152044",
-        database="JobWanted"
+        host=DB_HOST,
+        user=DB_USER,
+        port=DB_PORT,
+        password=DB_PASSWORD,
+        database=DB_NAME,
     )
 
     sql_query = """
@@ -95,7 +104,7 @@ model = XGBClassifier(n_estimators=200, random_state=42, max_depth=6)  # Change 
 model.fit(X_train, y_train)
 
 # Save the model
-joblib.dump(model, '../../../../VisProject/backend/chinaVis_salary_predict/xgboost_salary_predict_model.pkl')
+joblib.dump(model, 'xgboost_salary_predict_model.pkl')
 
 # Evaluate the model
 y_pred = model.predict(X_test)

@@ -1,14 +1,23 @@
 import mysql.connector
 
-
+import os
+from dotenv import load_dotenv
+# ----------------- 新增連線配置區 -----------------
+# 載入 .env 檔案中的所有變數
+load_dotenv()
+DB_USER = os.getenv("DB_USER")
+DB_PASSWORD = os.getenv("DB_PASSWORD")
+DB_HOST = os.getenv("DB_HOST")
+DB_NAME = os.getenv("DB_NAME")
+DB_PORT = os.getenv("DB_PORT")
 def get_salary_ranges():
     # 连接数据库
     conn = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        port="3306",
-        password="a21340201152044",
-        database="JobWanted"
+        host=DB_HOST,
+        user=DB_USER,
+        port=DB_PORT,
+        password=DB_PASSWORD,
+        database=DB_NAME,
     )
 
     # 定义SQL查询

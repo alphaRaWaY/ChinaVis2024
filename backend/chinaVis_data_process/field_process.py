@@ -4,13 +4,22 @@ import mysql.connector
 
 # 连接到MySQL数据库
 import numpy as np
-
+import os
+from dotenv import load_dotenv
+# ----------------- 新增連線配置區 -----------------
+# 載入 .env 檔案中的所有變數
+load_dotenv()
+DB_USER = os.getenv("DB_USER")
+DB_PASSWORD = os.getenv("DB_PASSWORD")
+DB_HOST = os.getenv("DB_HOST")
+DB_NAME = os.getenv("DB_NAME")
+DB_PORT = os.getenv("DB_PORT")
 conn = mysql.connector.connect(
-    host="localhost",  # 主机地址
-    user="root",  # 数据库用户名
-    port="3306",          # 端口号
-    password="123456",  # 数据库密码
-    database="JobWanted"  # 数据库名称
+    host=DB_HOST,
+    user=DB_USER,
+    port=DB_PORT,
+    password=DB_PASSWORD,
+    database=DB_NAME,
 )
 
 # 创建游标对象

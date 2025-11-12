@@ -12,7 +12,16 @@ from concurrent.futures import ThreadPoolExecutor
 
 from scatter_data import Jsonfy
 from stack_data_processing import StackDataJsonfy
-
+import os
+from dotenv import load_dotenv
+# ----------------- 新增連線配置區 -----------------
+# 載入 .env 檔案中的所有變數
+load_dotenv()
+DB_USER = os.getenv("DB_USER")
+DB_PASSWORD = os.getenv("DB_PASSWORD")
+DB_HOST = os.getenv("DB_HOST")
+DB_NAME = os.getenv("DB_NAME")
+DB_PORT = os.getenv("DB_PORT")
 app = Flask(__name__)
 CORS(app)  # 允许跨域请求
 
@@ -139,11 +148,11 @@ def send_checkbox_data():
     data = request.json
     type_name = data.get('typeName')
     conn = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        port="3306",
-        password="123456",
-        database="JobWanted"
+        host=DB_HOST,
+        user=DB_USER,
+        port=DB_PORT,
+        password=DB_PASSWORD,
+        database=DB_NAME,
     )
     query = f"SELECT job_title FROM rec_inf WHERE company_type = '{type_name}' LIMIT 50"
     cursor = conn.cursor()
@@ -160,11 +169,11 @@ def send_checkbox_data():
 
 def fetch_data(query, param):
     conn = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        port="3306",
-        password="123456",
-        database="JobWanted"
+        host=DB_HOST,
+        user=DB_USER,
+        port=DB_PORT,
+        password=DB_PASSWORD,
+        database=DB_NAME,
     )
     cursor = conn.cursor()
     cursor.execute(query, (param,))
@@ -267,11 +276,11 @@ def handle_job_parallel():
     companyType = data.get('companyType', 'type_BLfSmG')
     # 连接数据库
     conn = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        port="3306",
-        password="123456",
-        database="JobWanted"
+        host=DB_HOST,
+        user=DB_USER,
+        port=DB_PORT,
+        password=DB_PASSWORD,
+        database=DB_NAME,
     )
     cursor = conn.cursor()
 
@@ -333,11 +342,11 @@ def handle_job_line():
 
     # 连接数据库
     conn = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        port="3306",
-        password="123456",
-        database="JobWanted"
+        host=DB_HOST,
+        user=DB_USER,
+        port=DB_PORT,
+        password=DB_PASSWORD,
+        database=DB_NAME,
     )
 
     # 查询数据库
