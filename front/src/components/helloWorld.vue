@@ -133,7 +133,7 @@ a {
 
 #index .bg {
   /* 整体页面背景 */
-  background-image: url('../assets/img/bg.png');
+  background-image: url('../assets/img/Alice.jpg');
   background-size: 100% 100%;
   box-shadow: 0 0 3px blue;
   display: flex;
